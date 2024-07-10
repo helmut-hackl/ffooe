@@ -1,0 +1,40 @@
+@host = https://localhost:7094
+
+GET {{host}}/api/v1.0/client/0
+
+###
+
+GET {{host}}/api/v1.0/client
+
+###
+
+POST {{host}}/api/v1.0/client
+Content-Type: application/json
+
+{
+  //M_Client
+}
+
+###
+
+PUT {{host}}/api/v1.0/client/0
+Content-Type: application/json
+
+{
+  //M_Client
+}
+
+###
+
+PATCH {{host}}/api/v1.0/client/0
+Content-Type: application/json
+
+{
+  //Delta
+}
+
+###
+
+DELETE {{host}}/api/v1.0/client/0
+
+###
