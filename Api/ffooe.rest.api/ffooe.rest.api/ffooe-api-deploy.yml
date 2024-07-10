@@ -2,7 +2,7 @@ name: $(Year:yyyy).$(date:MM).$(date:dd).$(rev:rr)
 
 variables:
 
-  projectDir: 'ffooe-api.ff-steyr.at'
+  projectDir: 'Api/ffooe.rest.api/ffooe.rest.api'
   iisSite: '$(projectDir)'        # declare if name of IIS Site Name differs (IIS Service to stop)
   siteFolder: '$(projectDir)'     # declare if directory of website in \wwwroot differs for deplyoment
 
