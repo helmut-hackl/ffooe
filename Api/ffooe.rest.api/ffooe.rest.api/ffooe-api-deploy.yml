@@ -6,7 +6,7 @@ variables:
   iisSite: 'ffooe-api.ff-steyr.at'        # declare if name of IIS Site Name differs (IIS Service to stop)
   siteFolder: 'ffooe.rest.api'     # declare if directory of website in \wwwroot differs for deplyoment
 
-  project: '**ffooe.rest.api.csproj'
+  project: '**/ffooe.rest.api.csproj'
   assemblyVersion: '$(Build.BuildNumber)'
   iisBackupPath: '$(iisMainPath)\backup'
   sitePath: '$(iisMainPath)\$(siteFolder)'
