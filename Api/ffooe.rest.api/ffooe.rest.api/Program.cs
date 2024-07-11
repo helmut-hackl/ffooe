@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
-;
+
+
 
 DeltaConfig.Init(cfg => {
     cfg.AddEntity<M_Client>();
@@ -16,9 +17,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var configuration = new ConfigurationBuilder()
-                        .AddJsonFile("appsettings.json", true, true).Build();
+                        //.AddJsonFile("appsettings.json", true, true)
+#if DEBUG
+                        .AddJsonFile(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "ffooe-api-secrets.json"), false, true).Build();
+#else
+                        .AddJsonFile("C:\\inetpub\secrets\ffooe-api-secrets.json", true, true).Build();
+#endif
 var connString = configuration.GetConnectionString("ffooe");
 
+builder.Configuration.AddConfiguration(configuration);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<FFOOEContext>(options => options.UseSqlServer(connString));
 

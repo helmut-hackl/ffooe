@@ -7,7 +7,7 @@ using SimplePatch;
 
 namespace ffooe.rest.api.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="ADMIN")]
     [ApiController]
     [Route("api/v1.0/[controller]")]
     public class ClientController : ControllerBase
