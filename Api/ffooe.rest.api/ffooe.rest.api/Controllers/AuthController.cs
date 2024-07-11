@@ -46,7 +46,7 @@ namespace ffooe.rest.api.Controllers
         {
             return Ok(!_context.M_Users.Any(p => p.UserName == username));
         }
-        [HttpGet("ispasswrodstrong")]
+        [HttpGet("ispasswordstrong")]
         public IActionResult PasswordStrength(string password)
         {
             return Ok(CheckStrength(password));

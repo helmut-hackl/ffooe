@@ -44,7 +44,7 @@ namespace ffooe.rest.api.Controllers
         // PUT: api/M_Client/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put_Client(int id, M_Client m_Client)
+        public async Task<ActionResult<M_Client>> Put_Client(int id, M_Client m_Client)
         {
             if (id != m_Client.Id)
             {
@@ -56,6 +56,7 @@ namespace ffooe.rest.api.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                return m_Client;
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -68,8 +69,6 @@ namespace ffooe.rest.api.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
         }
 
         // POST: api/M_Client
@@ -79,8 +78,7 @@ namespace ffooe.rest.api.Controllers
         {
             _context.M_Clients.Add(m_Client);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetM_Client", new { id = m_Client.Id }, m_Client);
+            return m_Client;
         }
 
         // DELETE: api/M_Client/5
