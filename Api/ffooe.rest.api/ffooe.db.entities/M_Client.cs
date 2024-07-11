@@ -18,5 +18,7 @@ namespace ffooe.db.entities
         public virtual string? ClientAccessToken { get; set; }
         [SwaggerSchema(ReadOnly = true)]
         public virtual DateTime? ClientAccessExpireDate { get; set; }
+        public virtual string? ClientPushGroup { get; set; }
+        public virtual string ClientAdminEmail { get; set; } = string.Empty;
     }
 }
