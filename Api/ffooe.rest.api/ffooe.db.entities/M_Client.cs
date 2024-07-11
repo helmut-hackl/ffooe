@@ -4,14 +4,12 @@ namespace ffooe.db.entities
 {
     public partial class M_Client
     {
-        [SwaggerSchema(ReadOnly = true)]
         public virtual int Id { get; set; }
         public virtual string ClientName { get; set; } = string.Empty;
         public virtual string ClientStreet { get; set; } = string.Empty;
         public virtual string ClientStreetNumber { get; set; } = string.Empty;
         public virtual int ClientPostalCode { get; set; }
         public virtual string ClientCity { get; set; } = string.Empty;
-        public virtual int ClientStationId { get; set; }    
         public virtual int ClientSirenCode { get; set; }
         public virtual string ClientRegisterToken { get; set; } = string.Empty;
         [SwaggerSchema(ReadOnly = true)]
