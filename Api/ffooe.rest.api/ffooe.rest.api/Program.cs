@@ -21,7 +21,7 @@ var configuration = new ConfigurationBuilder()
 #if DEBUG
                         .AddJsonFile(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "ffooe-api-secrets.json"), false, true).Build();
 #else
-                        .AddJsonFile("C:\\inetpub\secrets\ffooe-api-secrets.json", true, true).Build();
+                        .AddJsonFile("C:\\inetpub\\secrets\\ffooe-api-secrets.json", true, true).Build();
 #endif
 var connString = configuration.GetConnectionString("ffooe");
 
