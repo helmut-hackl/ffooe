@@ -1,11 +1,13 @@
 ﻿using ffooe.db.context;
 using ffooe.db.entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SimplePatch;
 
 namespace ffooe.rest.api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/v1.0/[controller]")]
     public class ClientController : ControllerBase
