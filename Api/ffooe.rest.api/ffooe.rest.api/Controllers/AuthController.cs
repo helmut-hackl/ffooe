@@ -10,9 +10,11 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 
+// https://medium.com/@KumarHalder/token-based-authentication-in-asp-net-core-43e99aee0593
+
 namespace ffooe.rest.api.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [ApiController]
     [Route("api/v1.0/[controller]")]
     public class AuthController : ControllerBase
@@ -27,7 +29,27 @@ namespace ffooe.rest.api.Controllers
             _context = context;
             _configuration = configuration;
         }
-        // login
+
+        #region authorized refresh
+        
+        [HttpPost("refresh")]
+        public IActionResult Refresh()
+        {
+            string? tokenUser = User.Identity?.Name;
+            if (tokenUser == null) return Unauthorized();
+            var user = _context.M_Users.Find(tokenUser);
+            if (user == null || user.LockOut) return Unauthorized();
+            // generate token for user
+            var token = GenerateAccessToken(user.UserName);
+            // return access token for user's use
+            return Ok(new { AccessToken = new JwtSecurityTokenHandler().WriteToken(token) });
+        }
+
+        #endregion
+
+        #region anonymous auth
+
+        [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel model)
         {
@@ -40,17 +62,19 @@ namespace ffooe.rest.api.Controllers
             // return access token for user's use
             return Ok(new { AccessToken = new JwtSecurityTokenHandler().WriteToken(token) });
         }
-
+        [AllowAnonymous]
         [HttpGet("isuseravailable")]
         public IActionResult UserAvailable(string username)
         {
             return Ok(!_context.M_Users.Any(p => p.UserName == username));
         }
+        [AllowAnonymous]
         [HttpGet("ispasswordstrong")]
         public IActionResult PasswordStrength(string password)
         {
             return Ok(CheckStrength(password));
         }
+        [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterModel newUser)
         {
@@ -78,6 +102,7 @@ namespace ffooe.rest.api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [AllowAnonymous]
         [HttpPost("verify")]
         public IActionResult Verify([FromBody] VerifyModel verify)
         {
@@ -102,6 +127,11 @@ namespace ffooe.rest.api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        #endregion
+
+        #region private
+
         private bool IsEmailValid(string email)
         {
             var valid = true;
@@ -117,7 +147,7 @@ namespace ffooe.rest.api.Controllers
 
             return valid;
         }
-        public enum PasswordScore
+        private enum PasswordScore
         {
             Blank = 0,
             VeryWeak = 1,
@@ -126,7 +156,7 @@ namespace ffooe.rest.api.Controllers
             Strong = 4,
             VeryStrong = 5
         }
-        public static PasswordScore CheckStrength(string password)
+        private static PasswordScore CheckStrength(string password)
         {
             int score = 0;
 
@@ -169,5 +199,7 @@ namespace ffooe.rest.api.Controllers
             );
             return token;
         }
+
+        #endregion
     }
 }
