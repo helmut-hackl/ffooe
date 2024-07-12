@@ -19,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = new ConfigurationBuilder()
                         //.AddJsonFile("appsettings.json", true, true)
 #if DEBUG
-                        .AddJsonFile(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "ffooe-api-secrets.json"), false, true).Build();
+                        .AddJsonFile(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "ffooe-secrets.json"), false, true).Build();
 #else
                         .AddJsonFile("C:\\inetpub\\secrets\\ffooe-api-secrets.json", true, true).Build();
 #endif
